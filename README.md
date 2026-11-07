@@ -71,6 +71,9 @@ function revisarArchivos(archivos) {}
 **Supuestos.** El contenido llega como texto (los archivos binarios no se revisan). La función no lee el disco ni
 llama a la IA; solo decide. Nunca devuelve ni guarda el valor de la clave, solo la ruta y la línea (ADR-002).
 
+**Límite conocido.** Solo detecta claves escritas con `=`. Una clave escrita con `:` (por ejemplo
+`"API_KEY": "abc"` en un JSON o un YAML) no se detecta todavía; queda para una próxima versión.
+
 **Casos límite.**
 
 - Lista vacía: `permitido: true`, sin excluidos ni bloqueos y mensaje vacío.
