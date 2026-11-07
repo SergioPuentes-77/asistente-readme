@@ -1,0 +1,12 @@
+{
+  "name": "asistente-readme",
+  "version": "0.1.0",
+  "description": "Asistente que genera con IA el README de proyectos de clase (servicio local)",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
