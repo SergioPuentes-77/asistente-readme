@@ -24,7 +24,8 @@ function nombreDelArchivo(ruta) {
 }
 
 function esArchivoDeClaves(ruta) {
-  const nombre = nombreDelArchivo(ruta);
+  // En Windows y macOS ".ENV" es el mismo archivo que ".env", así que se compara en minúsculas
+  const nombre = nombreDelArchivo(ruta).toLowerCase();
   return nombre === ARCHIVO_DE_CLAVES || nombre.startsWith(PREFIJO_VARIANTE_DE_CLAVES);
 }
 
