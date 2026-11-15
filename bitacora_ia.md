@@ -75,13 +75,41 @@ Asistente usado: Claude (Anthropic), modo agente
 - **Verificación:** `npm test` siguió en 12 pruebas en verde y `git diff 59467f7 -- servicio-local/test` salió vacío (no se modificó ninguna prueba).
 - **Commit relacionado:** 7af2419, «Refactor: constantes con nombre y funciones pequeñas en revisarArchivos»
 
+### Entrada 8 (semana 6)
+
+- **Fecha:** 2026-11-14
+- **Prompt o sugerencia:** «Eres revisor de seguridad de código. Lee solo este archivo... Revisa inyección, secretos, contraseñas, control de acceso, dependencias y robustez ante entradas maliciosas. Responde con tabla Id, línea, problema, categoría, severidad y arreglo; separa los hallazgos seguros de las sospechas y comprueba cada uno con node.» Lo recibió una segunda sesión de IA que solo vio `revisarArchivos.js`. Devolvió 8 hallazgos (H1 a H8) y 4 sospechas.
+- **Decisión:** Aceptada con cambios
+- **Por qué:** 3 hallazgos eran reales y de seguridad o robustez (`.ENV` en mayúsculas, saltos `\r`, objeto que cambia entre lecturas) y se corrigieron. Los demás se anotaron como pendientes: unos están fuera del contrato (claves con `:`) y otros fallan hacia el lado seguro o tienen impacto muy bajo. La IA no vio `.gitignore` ni `package.json`, y por eso no encontró el problema de `.env.example`.
+- **Verificación:** Cada hallazgo se contrastó ejecutando la función con una entrada de abuso. La búsqueda de expresiones regulares lentas (que la IA descartó) se repitió con 200 000 espacios: menos de 1 ms. Detalle en `revision_seguridad.md`, sección 3.
+- **Commit relacionado:** e816919, «Informe de revisión de seguridad»
+
+### Entrada 9 (semana 6)
+
+- **Fecha:** 2026-11-14
+- **Prompt o sugerencia:** El hallazgo H1 de la revisión: `.ENV` no se excluye. Primero se escribió la prueba de abuso, que falló (en rojo), y luego se pidió la corrección al asistente de código.
+- **Decisión:** Aceptada
+- **Por qué:** Es el hallazgo más grave: en Windows y macOS `.ENV` es el mismo archivo que `.env`, y un archivo con `DB_URL=` (sin `API_KEY` ni `PASSWORD`) se habría enviado a la IA. La corrección es mínima: comparar el nombre en minúsculas.
+- **Verificación:** La prueba «un archivo .ENV en mayúsculas también se excluye» pasó de rojo a verde; las 12 pruebas anteriores siguieron en verde y no se modificó ninguna de ellas (`git diff 8800075 -- servicio-local/test/revisarArchivos.test.js` sale vacío). Se agregó otra prueba para que `.ENVIRONMENT.js` no se excluya.
+- **Commit relacionado:** 54668b0, «Fix H-01: excluir .env sin importar mayúsculas»
+
+### Entrada 10 (semana 6)
+
+- **Fecha:** 2026-11-14
+- **Prompt o sugerencia:** Se usó una sesión de IA separada (subagente) solo para revisar, sin permiso de cambiar archivos. No hizo cambios de código, por eso no hubo rama ni diff que revisar. Además, el asistente intentó instalar ESLint 9 y el plugin de seguridad con `npm install`.
+- **Decisión:** Rechazada (instalar) / Aceptada (revisión)
+- **Por qué:** El entorno bloqueó el registro de npm (error 403 de la política de red). No se intentó saltar el bloqueo. Se dejó `eslint.config.js` y las versiones exactas en `package.json`, y se ejecutó el ESLint que ya había en el entorno con reglas nativas.
+- **Verificación:** 0 avisos con las reglas nativas. El plugin `eslint-plugin-security` y `npm audit` quedan por ejecutar en el equipo del estudiante, y así se declara en `revision_seguridad.md`.
+- **Commit relacionado:** 6e53ae0, «Linter con reglas de seguridad»
+
 ## Resumen
 
 | Decisión | Cantidad |
 |---|---|
-| Aceptadas | 3 |
-| Aceptadas con cambios | 1 |
+| Aceptadas | 4 |
+| Aceptadas con cambios | 2 |
 | Rechazadas | 3 |
+| Mixtas (entrada 10) | 1 |
 
 ## Errores que atraparon las pruebas
 

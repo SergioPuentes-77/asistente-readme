@@ -50,10 +50,10 @@ Las pruebas de abuso se escribieron primero y se vieron fallar (3 en rojo) en el
 |---|---|---|
 | H1: `.ENV` y variantes en mayúsculas no se excluyen | Real (se corrigió como H-01 del proyecto) | Ejecuté la función con `.ENV` y `DB_URL=...`: devolvía `permitido: true` |
 | H4: saltos `\r` sueltos dan línea incorrecta | Real (H-02) | Ejecuté la función con `x\rAPI_KEY=1`: informaba línea 1 en vez de 2 |
-| H5: getter que cambia entre lecturas | Real, de baja probabilidad (H-03) | Prueba con un getter que cuenta lecturas: leía 3 veces |
+| H5: getter que cambia entre lecturas | Real, de baja probabilidad (H-03) | Prueba con un getter que cuenta lecturas: leía el contenido más de una vez (la IA contó 3 lecturas en total) |
 | H2: no detecta `API_KEY: abc`, JSON, `SECRET`, `TOKEN` | Real, pero ya conocido y fuera del contrato (RNF-02 solo pide `API_KEY=` y `PASSWORD=`) | Ya estaba como «Límite conocido» en el README; queda en pendientes |
-| H3: `password=>x` y `// API_KEY=tu-clave` se bloquean | Real, pero falla hacia el lado seguro (bloquea de más) | Lo probé; no se corrige ahora para no ampliar el alcance |
-| H6: un getter que lanza error rompe el `TypeError` del contrato | Real, impacto bajo | Se entiende por el código; queda en pendientes |
+| H3: `password=>x` y `// API_KEY=tu-clave` se bloquean | Real, pero falla hacia el lado seguro (bloquea de más) | La IA lo ejecutó con node y lo confirmé leyendo la expresión regular (`=` seguido de `>` cuenta como valor); no se corrige ahora para no ampliar el alcance |
+| H6: un getter que lanza error rompe el `TypeError` del contrato | Real, impacto bajo | La IA lo ejecutó con node; en el código se ve que la validación no captura errores; queda en pendientes |
 | H7: la ruta con un secreto dentro del nombre se devuelve igual | Real, muy poco probable | Queda en pendientes |
 | H8: sin límite de tamaño de entrada | Real, impacto bajo (250 ms con 1 millón de claves) | Queda en pendientes; el límite lo debe poner quien llama |
 | Sospecha S1: carpeta llamada `.env/` | Sin verificar; el contrato solo habla del nombre del archivo | Se anota como pendiente |
