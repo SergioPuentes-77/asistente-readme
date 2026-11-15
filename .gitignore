@@ -4,4 +4,8 @@
 
 # Dependencias y archivos del sistema
 node_modules/
+<<<<<<< HEAD
 .DS_Store
+=======
+.DS_Store
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323

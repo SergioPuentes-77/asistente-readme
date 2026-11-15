@@ -3,12 +3,16 @@
 Proyecto: Asistente de documentación (README) para proyectos de clase
 Estudiante: Sergio Andrés Puentes González
 Funcionalidad: HU-01 Excluir archivos con claves antes de enviar el proyecto a la IA
+<<<<<<< HEAD
 Asistente usado: Claude (Anthropic), modo agente
 
 > Nota de transparencia: esta bitácora registra lo que ocurrió en la sesión de trabajo con el asistente, que
 > escribió el contrato, las pruebas, el código y el refactor siguiendo el diseño del estudiante (ADR-001,
 > ADR-002 y el documento de requisitos de la semana 3). Las decisiones de cada entrada se tomaron durante esa
 > sesión. El estudiante debe leer el código y poder explicarlo.
+=======
+Asistente usado: Claude (Anthropic), modo chat
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ## Entradas
 
@@ -18,8 +22,13 @@ Asistente usado: Claude (Anthropic), modo agente
 - **Prompt o sugerencia:** El asistente propuso escribir las pruebas con el ejecutor que ya trae Node (`node:test` y `assert`) y no con Jest.
 - **Decisión:** Aceptada
 - **Por qué:** El servicio local es Node.js (ADR-001). `node:test` viene incluido desde Node 18, no agrega dependencias y deja `npm test` como un solo comando.
+<<<<<<< HEAD
 - **Verificación:** `npm test` ejecutó las 12 pruebas con Node v22; en el commit en rojo se vieron las 12 fallar.
 - **Commit relacionado:** c5c32ab, «Pruebas de HU-01, excluir archivos con claves (en rojo)»
+=======
+- **Verificación:** `npm test` ejecutó las 12 pruebas; en el commit en rojo se vieron las 12 fallar.
+- **Commit relacionado:** «Pruebas de HU-01, excluir archivos con claves (en rojo)»
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ### Entrada 2
 
@@ -28,7 +37,11 @@ Asistente usado: Claude (Anthropic), modo agente
 - **Decisión:** Aceptada
 - **Por qué:** Cubren el contrato completo: 4 casos normales, 2 de error (el escenario 2 del criterio y los datos inválidos) y 6 límite. Varios de los límite no estaban a la vista antes de escribir el código.
 - **Verificación:** Se contaron las pruebas por tipo contra el contrato del README y se ejecutaron en rojo: 12 pruebas, 0 pasan, 12 fallan.
+<<<<<<< HEAD
 - **Commit relacionado:** c5c32ab
+=======
+- **Commit relacionado:** «Pruebas de HU-01, excluir archivos con claves (en rojo)»
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ### Entrada 3
 
@@ -37,7 +50,11 @@ Asistente usado: Claude (Anthropic), modo agente
 - **Decisión:** Aceptada con cambios
 - **Por qué:** La primera versión pasó 11 de 12 pruebas. Fallaba la de `password == 'x'` porque la expresión tomaba el segundo `=` como valor de la clave. Se agregó `(?!=)` después del `=` y no se tocó ninguna prueba.
 - **Verificación:** `npm test` pasó de 11 pruebas en verde y 1 en rojo a 12 en verde; `git diff` de la carpeta de pruebas quedó vacío.
+<<<<<<< HEAD
 - **Commit relacionado:** 59467f7, «Implementación de revisarArchivos para HU-01 (pruebas en verde)»
+=======
+- **Commit relacionado:** «Implementación de revisarArchivos para HU-01 (pruebas en verde)»
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ### Entrada 4
 
@@ -46,7 +63,11 @@ Asistente usado: Claude (Anthropic), modo agente
 - **Decisión:** Rechazada
 - **Por qué:** Agrega una dependencia para detectar solo dos patrones. RNF-02 pide exactamente `API_KEY=` y `PASSWORD=`, y el proyecto no tiene presupuesto ni necesidad de más reglas.
 - **Verificación:** La implementación con una expresión regular pasó las 12 pruebas y `package.json` no tiene dependencias.
+<<<<<<< HEAD
 - **Commit relacionado:** 59467f7
+=======
+- **Commit relacionado:** «Implementación de revisarArchivos para HU-01 (pruebas en verde)»
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ### Entrada 5
 
@@ -55,7 +76,11 @@ Asistente usado: Claude (Anthropic), modo agente
 - **Decisión:** Rechazada
 - **Por qué:** El escenario 1 de HU-01 pide excluir el archivo sin más, y el ADR-002 dice que nunca se guarda ni se muestra el valor de una clave. Leerlo no aporta nada al criterio.
 - **Verificación:** La primera prueba incluye un `.env` con `DB_PASSWORD=abc123` y exige que no haya bloqueos; pasa.
+<<<<<<< HEAD
 - **Commit relacionado:** 59467f7
+=======
+- **Commit relacionado:** «Implementación de revisarArchivos para HU-01 (pruebas en verde)»
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ### Entrada 6
 
@@ -64,7 +89,11 @@ Asistente usado: Claude (Anthropic), modo agente
 - **Decisión:** Rechazada
 - **Por qué:** Ni HU-01 ni RNF-02 lo piden, y daría falsos positivos que bloquearían envíos válidos. Queda como posible mejora si el cliente lo pide.
 - **Verificación:** Se revisaron el criterio de aceptación y RNF-02: solo piden dos patrones. Ninguna de las 12 pruebas necesita esta regla.
+<<<<<<< HEAD
 - **Commit relacionado:** 59467f7
+=======
+- **Commit relacionado:** «Implementación de revisarArchivos para HU-01 (pruebas en verde)»
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ### Entrada 7
 
@@ -72,6 +101,7 @@ Asistente usado: Claude (Anthropic), modo agente
 - **Prompt o sugerencia:** «Con las pruebas en verde, refactoriza: nombres claros, elimina los valores mágicos y divide la función larga.» El asistente movió los textos y patrones a constantes y separó cinco funciones pequeñas.
 - **Decisión:** Aceptada
 - **Por qué:** La función hacía validar, buscar claves y armar el mensaje a la vez, con una expresión regular suelta. Con funciones pequeñas cada regla se lee sola.
+<<<<<<< HEAD
 - **Verificación:** `npm test` siguió en 12 pruebas en verde y `git diff 59467f7 -- servicio-local/test` salió vacío (no se modificó ninguna prueba).
 - **Commit relacionado:** 7af2419, «Refactor: constantes con nombre y funciones pequeñas en revisarArchivos»
 
@@ -101,11 +131,16 @@ Asistente usado: Claude (Anthropic), modo agente
 - **Por qué:** El entorno bloqueó el registro de npm (error 403 de la política de red). No se intentó saltar el bloqueo. Se dejó `eslint.config.js` y las versiones exactas en `package.json`, y se ejecutó el ESLint que ya había en el entorno con reglas nativas.
 - **Verificación:** 0 avisos con las reglas nativas. El plugin `eslint-plugin-security` y `npm audit` quedan por ejecutar en el equipo del estudiante, y así se declara en `revision_seguridad.md`.
 - **Commit relacionado:** 6e53ae0, «Linter con reglas de seguridad»
+=======
+- **Verificación:** `npm test` siguió en 12 pruebas en verde y `git diff` de la carpeta de pruebas salió vacío (no se modificó ninguna prueba).
+- **Commit relacionado:** «Refactor: constantes con nombre y funciones pequeñas en revisarArchivos»
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ## Resumen
 
 | Decisión | Cantidad |
 |---|---|
+<<<<<<< HEAD
 | Aceptadas | 4 |
 | Aceptadas con cambios | 2 |
 | Rechazadas | 3 |
@@ -120,6 +155,18 @@ Asistente usado: Claude (Anthropic), modo agente
 2. **Comprobación adicional, en una copia que no se subió.** Se hicieron tres cambios dañinos para ver si las
    pruebas los detectaban: numerar las líneas desde 0 (fallan 3 pruebas), quitar la opción que ignora
    mayúsculas (falla 1) y excluir todo lo que empiece con `.env` (falla 1, la de `.environment.js`).
+=======
+| Aceptadas | 3 |
+| Aceptadas con cambios | 1 |
+| Rechazadas | 3 |
+
+## Errores que atraparon las pruebas
+
+La prueba «una comparación como password == 'x' no cuenta como clave» falló en la primera versión (esperaba
+`permitido: true` y recibió `false`). La expresión `\s*=\s*\S+` aceptaba el segundo `=` de `==` como si fuera el
+valor de la clave, así que el filtro habría bloqueado código válido. Se corrigió con `(?!=)` y volvieron a pasar
+las 12 pruebas.
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ## Reflexión final (5 a 8 líneas)
 
@@ -130,4 +177,8 @@ Con las pruebas en verde el refactor fue seguro: cambiaron las constantes y las 
 iguales. Se rechazaron tres ideas que parecían más completas (una librería de secretos, leer el `.env` y detectar por
 aleatoriedad) porque el diseño y el cliente solo pedían dos patrones. Lo que se haría diferente: pedir más casos de
 error desde el principio, por ejemplo claves escritas con `:` como `"API_KEY": "abc"` en un JSON, que el patrón actual
+<<<<<<< HEAD
 no detecta, y leer la expresión regular con calma antes de ejecutarla, porque el error estaba justo ahí.
+=======
+no detecta, y leer la expresión regular con calma antes de ejecutarla, porque el error estaba justo ahí.
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323

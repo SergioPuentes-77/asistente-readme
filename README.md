@@ -1,5 +1,6 @@
 # Asistente de documentación (README) para proyectos de clase
 
+<<<<<<< HEAD
 ## 1. Qué es
 
 Asistente que genera con IA el README de proyectos de clase (instalación, módulos y ejemplos de uso).
@@ -74,6 +75,22 @@ Autor: Sergio Andrés Puentes González, FET Neiva. Trabajo académico, sin lice
 reservados al autor).
 
 ## Funcionalidad HU-01 (contrato de `revisarArchivos`)
+=======
+Asistente que genera con IA el README de proyectos de clase (instalación, módulos y ejemplos de uso).
+Proyecto final del Seminario Inteligencia Artificial Aplicada al Ciclo de Vida del Software.
+
+Según el diseño (ADR-001), el sistema se ejecuta en el equipo del desarrollador: interfaz web Angular y un
+**servicio local en Node.js** con los datos en archivos JSON. El código del servicio está en `servicio-local/`.
+
+```
+servicio-local/
+  src/    código de la funcionalidad
+  test/   pruebas automatizadas (*.test.js)
+bitacora_ia.md   registro del uso del asistente de código
+```
+
+## Funcionalidad de la semana 5
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
 
 ### Historia de usuario
 
@@ -151,3 +168,14 @@ llama a la IA; solo decide. Nunca devuelve ni guarda el valor de la clave, solo 
 | `[{ ruta: '.env', contenido: 'DB_PASSWORD=abc123' }, { ruta: 'index.js', contenido: 'console.log(1);' }]` | `{ permitido: true, excluidos: ['.env'], bloqueos: [], mensaje: 'Se excluyó 1 archivo con datos secretos' }` |
 | `[{ ruta: 'config.php', contenido: 'API_KEY=XXXX-0000' }]` | `{ permitido: false, excluidos: [], bloqueos: [{ ruta: 'config.php', linea: 1 }], mensaje: '' }` |
 | `[]` | `{ permitido: true, excluidos: [], bloqueos: [], mensaje: '' }` |
+<<<<<<< HEAD
+=======
+
+### Cómo ejecutar las pruebas
+
+Requisito: Node.js 18 o superior (no hay dependencias que instalar).
+
+```
+npm test
+```
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323

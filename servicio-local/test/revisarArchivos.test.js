@@ -106,4 +106,8 @@ test("una comparación como password == 'x' no cuenta como clave", () => {
   const resultado = revisarArchivos([{ ruta: 'login.js', contenido: "if (password == 'x') {}" }]);
   assert.equal(resultado.permitido, true);
   assert.deepEqual(resultado.bloqueos, []);
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323

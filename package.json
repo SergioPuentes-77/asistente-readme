@@ -4,6 +4,7 @@
   "description": "Asistente que genera con IA el README de proyectos de clase (servicio local)",
   "private": true,
   "scripts": {
+<<<<<<< HEAD
     "test": "node --test",
     "lint": "eslint .",
     "audit": "npm audit --audit-level=low"
@@ -17,3 +18,11 @@
     "eslint-plugin-security": "3.0.1"
   }
 }
+=======
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
+>>>>>>> 791a952af292382c47663db25f3fb3adafc62323
