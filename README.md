@@ -1,19 +1,79 @@
 # Asistente de documentación (README) para proyectos de clase
 
-Asistente que genera con IA el README de proyectos de clase (instalación, módulos y ejemplos de uso).
-Proyecto final del Seminario Inteligencia Artificial Aplicada al Ciclo de Vida del Software.
+## 1. Qué es
 
-Según el diseño (ADR-001), el sistema se ejecuta en el equipo del desarrollador: interfaz web Angular y un
-**servicio local en Node.js** con los datos en archivos JSON. El código del servicio está en `servicio-local/`.
+Asistente que genera con IA el README de proyectos de clase (instalación, módulos y ejemplos de uso).
+Proyecto final del Seminario Inteligencia Artificial Aplicada al Ciclo de Vida del Software (FET, Neiva).
+
+Esta entrega (semana 6) incluye la funcionalidad HU-01: **revisar el proyecto antes de enviarlo a la IA**, para que
+ningún archivo con claves (`.env`, `API_KEY=...`, `PASSWORD=...`) salga del equipo del desarrollador. Según el diseño
+(ADR-001) el sistema corre en el equipo del desarrollador, con un servicio local en Node.js. Todavía no hay interfaz
+ni conexión con la IA: lo que existe es la función de revisión y sus pruebas.
+
+## 2. Requisitos
+
+- Node.js 18 o superior (se probó con Node 22) y npm.
+- Git, para clonar el repositorio.
+
+## 3. Instalación
+
+```
+git clone <URL-del-repositorio>
+cd asistente-readme
+npm install
+```
+
+`npm install` instala solo las herramientas de desarrollo (ESLint y su plugin de seguridad). Para correr las pruebas no
+hace falta instalar nada.
+
+## 4. Ejecución
+
+La función se usa desde código de Node.js:
+
+```js
+const { revisarArchivos } = require('./servicio-local/src/revisarArchivos');
+
+const resultado = revisarArchivos([
+  { ruta: '.env', contenido: 'DB_PASSWORD=abc123' },
+  { ruta: 'index.js', contenido: 'console.log(1);' },
+]);
+console.log(resultado);
+// { permitido: true, excluidos: ['.env'], bloqueos: [], mensaje: 'Se excluyó 1 archivo con datos secretos' }
+```
+
+## 5. Pruebas
+
+```
+npm test          # pruebas automatizadas (16 pruebas)
+npm run lint      # análisis con ESLint y reglas de seguridad
+npm audit         # revisión de dependencias con vulnerabilidades conocidas
+```
+
+## 6. Estructura
 
 ```
 servicio-local/
-  src/    código de la funcionalidad
-  test/   pruebas automatizadas (*.test.js)
-bitacora_ia.md   registro del uso del asistente de código
+  src/revisarArchivos.js          la función de revisión (HU-01)
+  test/revisarArchivos.test.js    12 pruebas de la semana 5
+  test/seguridad.test.js          4 pruebas de abuso de la semana 6
+eslint.config.js                  configuración del linter con reglas de seguridad
+revision_seguridad.md             informe de la revisión de seguridad (semana 6)
+bitacora_ia.md                    registro del uso del asistente de código
 ```
 
-## Funcionalidad de la semana 5
+## 7. Uso de IA
+
+Se usó Claude (Anthropic) como asistente de código, en modo agente, para escribir el contrato, las pruebas, el código,
+la revisión de seguridad y esta documentación. Una segunda sesión de IA, que solo recibió el código, hizo una revisión
+independiente. Cada sugerencia, si se aceptó o se rechazó y cómo se comprobó, está en `bitacora_ia.md`; los hallazgos
+de seguridad y su verificación están en `revision_seguridad.md`. El estudiante revisa y debe poder explicar el código.
+
+## 8. Autor y licencia
+
+Autor: Sergio Andrés Puentes González, FET Neiva. Trabajo académico, sin licencia de uso público (todos los derechos
+reservados al autor).
+
+## Funcionalidad HU-01 (contrato de `revisarArchivos`)
 
 ### Historia de usuario
 
@@ -91,11 +151,3 @@ llama a la IA; solo decide. Nunca devuelve ni guarda el valor de la clave, solo 
 | `[{ ruta: '.env', contenido: 'DB_PASSWORD=abc123' }, { ruta: 'index.js', contenido: 'console.log(1);' }]` | `{ permitido: true, excluidos: ['.env'], bloqueos: [], mensaje: 'Se excluyó 1 archivo con datos secretos' }` |
 | `[{ ruta: 'config.php', contenido: 'API_KEY=XXXX-0000' }]` | `{ permitido: false, excluidos: [], bloqueos: [{ ruta: 'config.php', linea: 1 }], mensaje: '' }` |
 | `[]` | `{ permitido: true, excluidos: [], bloqueos: [], mensaje: '' }` |
-
-### Cómo ejecutar las pruebas
-
-Requisito: Node.js 18 o superior (no hay dependencias que instalar).
-
-```
-npm test
-```
