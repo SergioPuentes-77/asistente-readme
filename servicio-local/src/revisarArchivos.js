@@ -8,15 +8,22 @@ const SEPARADOR_DE_LINEAS = /\r\n|\r|\n/; // Windows, Linux y Mac antiguo
 // API_KEY o PASSWORD (cualquier mayúscula), un "=" que no sea "==" y un valor
 const PATRON_DE_CLAVE = /(API_KEY|PASSWORD)\s*=(?!=)\s*\S+/i;
 
-function validarArchivos(archivos) {
+// Valida la lista y devuelve una copia con una sola lectura de cada dato. Así lo que se revisa
+// es exactamente lo que se envía, aunque el objeto original cambie después (hallazgo H-03).
+function copiarArchivos(archivos) {
   if (!Array.isArray(archivos)) {
     throw new TypeError('archivos debe ser una lista de { ruta, contenido }');
   }
-  for (const archivo of archivos) {
-    if (!archivo || typeof archivo.ruta !== 'string' || typeof archivo.contenido !== 'string') {
+  return archivos.map((archivo) => {
+    if (!archivo) {
       throw new TypeError('cada archivo debe tener ruta y contenido de texto');
     }
-  }
+    const { ruta, contenido } = archivo;
+    if (typeof ruta !== 'string' || typeof contenido !== 'string') {
+      throw new TypeError('cada archivo debe tener ruta y contenido de texto');
+    }
+    return { ruta, contenido };
+  });
 }
 
 function nombreDelArchivo(ruta) {
@@ -47,12 +54,10 @@ function mensajeDeExcluidos(cantidad) {
 }
 
 function revisarArchivos(archivos) {
-  validarArchivos(archivos);
-
   const excluidos = [];
   const bloqueos = [];
 
-  for (const { ruta, contenido } of archivos) {
+  for (const { ruta, contenido } of copiarArchivos(archivos)) {
     if (esArchivoDeClaves(ruta)) {
       excluidos.push(ruta);
       continue;
