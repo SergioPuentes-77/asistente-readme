@@ -4,7 +4,7 @@
 const ARCHIVO_DE_CLAVES = '.env';
 const PREFIJO_VARIANTE_DE_CLAVES = '.env.'; // por ejemplo .env.local
 const SEPARADOR_DE_RUTA = /[\\/]/; // funciona con rutas de Linux y de Windows
-const SEPARADOR_DE_LINEAS = /\r?\n/;
+const SEPARADOR_DE_LINEAS = /\r\n|\r|\n/; // Windows, Linux y Mac antiguo
 // API_KEY o PASSWORD (cualquier mayúscula), un "=" que no sea "==" y un valor
 const PATRON_DE_CLAVE = /(API_KEY|PASSWORD)\s*=(?!=)\s*\S+/i;
 
